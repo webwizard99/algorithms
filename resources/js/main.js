@@ -16,8 +16,8 @@ messenger.addText = function(textToAdd) {
   messageBox.scrollTop = messageBox.scrollHeight - messageBox.clientHeight;
 }
 
-messenger.unionTest = function(p, q, time) {
-  this.addText(`Quick-union: p: ${p}, q: ${q}, time: ${time}`);
+messenger.unionTest = function(fn, n, time) {
+  this.addText(`${fn}: n: ${n}, time: ${time}, average: ${time / n}`);
 }
 
 const QuickUnion = function(N) {
@@ -41,16 +41,17 @@ QuickUnion.prototype.connected = function(p, q) {
 }
 
 QuickUnion.prototype.union = function(p, q) {
-  let startTime = new Date().getTime();
   const i = this.root(p);
   const j = this.root(q);
   this.id[i] = j;
-  let endTime = new Date().getTime();
-  return endTime - startTime;
 }
 
 QuickUnion.prototype.randomConnections = function(n) {
+  
+  let startTime = new Date().getTime();
+  console.log(startTime);
   for (let i = 0; i < n; i++) {
+    
     const p = Math.floor(Math.random() * ( this.id.length - 1));
     let q = p;
     while (q == p) {
@@ -58,10 +59,13 @@ QuickUnion.prototype.randomConnections = function(n) {
     }
 
     if (!this.connected(p, q)) {
-      const uTime = this.union(p, q);
-      messenger.unionTest(p, q, uTime);
+      this.union(p, q);
+      
     }
   }
+  let endTime = new Date().getTime();
+  console.log(endTime);
+  messenger.unionTest('Quick Union', n, (endTime - startTime));
 }
 
 let Union1 = new QuickUnion(20);
@@ -71,5 +75,5 @@ let Union2 = new QuickUnion(200);
 Union2.randomConnections(20);
 
 let Union3 = new QuickUnion(30000);
-Union3.randomConnections(400);
+Union3.randomConnections(4000);
 
