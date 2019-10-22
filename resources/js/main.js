@@ -49,7 +49,6 @@ QuickUnion.prototype.union = function(p, q) {
 QuickUnion.prototype.randomConnections = function(n) {
   
   let startTime = new Date().getTime();
-  console.log(startTime);
   for (let i = 0; i < n; i++) {
     
     const p = Math.floor(Math.random() * ( this.id.length - 1));
@@ -64,7 +63,6 @@ QuickUnion.prototype.randomConnections = function(n) {
     }
   }
   let endTime = new Date().getTime();
-  console.log(endTime);
   messenger.unionTest('Quick Union', n, (endTime - startTime));
 }
 
