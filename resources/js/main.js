@@ -66,6 +66,68 @@ QuickUnion.prototype.randomConnections = function(n) {
   messenger.unionTest('Quick Union', n, (endTime - startTime));
 }
 
+const WeightedQuickUnion = function(n) {
+  this.sz = [];
+  this.id = [];
+
+  for (let i = 0; i < n; i++) {
+    this.id[i] = i;
+    this.sz[i] = 1;
+  }
+}
+
+WeightedQuickUnion.prototype.root = function(i) {
+  let startI = i;
+  while (!i == this.id[i]) {
+    i = this.id[i];
+  }
+
+  // reset all nodes on branch to root?
+  while (startI != this.id[startI]) {
+    let tempI = startI
+    this.id[startI] = i;
+    startI = this.id[tempI];
+  }
+}
+
+WeightedQuickUnion.prototype.connected = function(p, q) {
+  return this.root(p) == this.root(q);
+}
+
+WeightedQuickUnion.prototype.union = function(p, q) {
+  let i = this.root(p);
+  let j = this.root(q);
+  if (i == j) {
+    return;
+  } else if (this.sz[i] < this.sz[j]) {
+    this.id[i] = j;
+    this.sz[j] = this.sz[i];
+  } else {
+    this.id[j] = i;
+    this.sz[i] = this.sz[j];
+  }
+}
+
+WeightedQuickUnion.prototype.randomConnections = function(n) {
+  
+  let startTime = new Date().getTime();
+  for (let i = 0; i < n; i++) {
+    
+    const p = Math.floor(Math.random() * ( this.id.length - 1));
+    let q = p;
+    while (q == p) {
+      q = Math.floor(Math.random() * ( this.id.length - 1));
+    }
+
+    if (!this.connected(p, q)) {
+      this.union(p, q);
+      
+    }
+  }
+  let endTime = new Date().getTime();
+  messenger.unionTest('Weighted Quick Union', n, (endTime - startTime));
+}
+
 let Union1 = new QuickUnion(20);
 Union1.randomConnections(5);
 
@@ -74,4 +136,13 @@ Union2.randomConnections(20);
 
 let Union3 = new QuickUnion(30000);
 Union3.randomConnections(4000);
+
+let WeightedUnion1 = new WeightedQuickUnion(30000);
+WeightedUnion1.randomConnections(4000);
+
+let Union4 = new QuickUnion(500000);
+Union4.randomConnections(20000);
+
+let WeightedUnion2 = new WeightedQuickUnion(500000);
+WeightedUnion2.randomConnections(20000);
 
