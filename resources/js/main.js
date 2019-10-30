@@ -4,6 +4,7 @@ const messenger = {
   maxMessages: 50,
   textCount: 0
 }
+
 messenger.addText = function(textToAdd) {
   messageBox.innerHTML += '<p class="message">' + textToAdd + '</p>';
   
@@ -18,6 +19,12 @@ messenger.addText = function(textToAdd) {
 
 messenger.unionTest = function(fn, n, time) {
   this.addText(`${fn}: n: ${n}, time: ${time}, average: ${time / n}`);
+}
+
+messenger.stackTest = function(original, output, time) {
+  this.addText(`Stack test...`);
+  this.addText(original);
+  this.addText(output);
 }
 
 const QuickUnion = function(N) {
@@ -77,17 +84,13 @@ const WeightedQuickUnion = function(n) {
 }
 
 WeightedQuickUnion.prototype.root = function(i) {
-  let startI = i;
+  
   while (!i == this.id[i]) {
+    this.id[i] = this.id[this.id[i]];
     i = this.id[i];
   }
 
-  // reset all nodes on branch to root?
-  while (startI != this.id[startI]) {
-    let tempI = startI
-    this.id[startI] = i;
-    startI = this.id[tempI];
-  }
+  return i;
 }
 
 WeightedQuickUnion.prototype.connected = function(p, q) {
@@ -97,14 +100,13 @@ WeightedQuickUnion.prototype.connected = function(p, q) {
 WeightedQuickUnion.prototype.union = function(p, q) {
   let i = this.root(p);
   let j = this.root(q);
-  if (i == j) {
-    return;
-  } else if (this.sz[i] < this.sz[j]) {
+  if (i == j)  return;
+  if (this.sz[i] < this.sz[j]) {
     this.id[i] = j;
-    this.sz[j] = this.sz[i];
+    this.sz[j] += this.sz[i];
   } else {
     this.id[j] = i;
-    this.sz[i] = this.sz[j];
+    this.sz[i] += this.sz[j];
   }
 }
 
@@ -145,4 +147,63 @@ Union4.randomConnections(20000);
 
 let WeightedUnion2 = new WeightedQuickUnion(500000);
 WeightedUnion2.randomConnections(20000);
+
+let Union5 = new QuickUnion(2000000);
+Union5.randomConnections(200000);
+
+let WeightedUnion3 = new WeightedQuickUnion(20000000);
+WeightedUnion3.randomConnections(200000);
+
+
+// Stacks and Queues
+
+const LinkedStackOfStrings = function() {
+  const Node = function(item = null) {
+    this.item = item;
+    this.next = null;
+  }
+  
+  let first = new Node();
+}
+
+LinkedStackOfStrings.prototype.isEmpty = function() {
+  return this.first.item == null;
+}
+
+LinkedStackOfStrings.prototype.push = function(item) {
+  if (this.first.item) {
+    let firstitem = this.first.item;
+    let oldfirst = new Node(firstitem);
+  }
+  this.first = new Node();
+  this.first.item = item;
+  this.first.next = oldfirst;
+}
+
+LinkedStackOfStrings.prototype.pop = function() {
+  let item = this.first.item;
+  this.first = this.first.next;
+  return item;
+}
+
+const StringClient = function(string) {
+  let stack = new LinkedStackOfStrings();
+
+  const stringQueue = string.split(' ');
+
+  let output = '';
+
+  stringQueue.forEach(word => {
+    if (word != '-') {
+      stack.push(word);
+    } else {
+      output += stack.pop();
+    }
+  });
+
+  messenger.stackTest(string, output);
+
+}
+
+StringClient("Mary had a little - lamb -- whose fleece - was white -- as snow");
 
