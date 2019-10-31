@@ -1,4 +1,5 @@
-
+// lost solutions preceeding 118 due to clearing temporary
+// internet files
 
 // 118 Pascal's Triangle
 var generate = function(numRows) {

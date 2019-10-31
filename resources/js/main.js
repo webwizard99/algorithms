@@ -27,6 +27,12 @@ messenger.stackTest = function(original, output, time) {
   this.addText(output);
 }
 
+messenger.queueTest = function(original, output) {
+  this.addText(`Queue test...`);
+  this.addText(original);
+  this.addText(output);
+}
+
 const QuickUnion = function(N) {
   this.id = [];
   
@@ -155,7 +161,11 @@ let WeightedUnion3 = new WeightedQuickUnion(20000000);
 WeightedUnion3.randomConnections(200000);
 
 
-// Stacks and Queues
+// ***                   ***
+// *** Stacks and Queues ***
+// ***                   ***
+
+// Stack of Strings
 
 const Node = function(item = null) {
   this.item = item;
@@ -216,3 +226,67 @@ const StringClient = function(string) {
 
 StringClient("Mary had a little - lamb - - whose fleece - was white - - as snow");
 
+
+// Queue of strings
+
+// Node defined above in Stack section
+// const Node = function(item = null) {
+//   this.item = item;
+//   this.next = null;
+// }
+
+const LinkedQueueOfStrings = function() {
+  this.first = new Node();
+  this.last = new Node();
+}
+
+LinkedQueueOfStrings.prototype.isEmpty = function() {
+  return this.first.item == null;
+}
+
+LinkedQueueOfStrings.prototype.enqueue = function(item) {
+  let oldlast = this.last;
+  this.last = new Node();
+  this.last.item = item;
+  if (this.isEmpty()) {
+    this.first = this.last;
+  } else {
+    oldlast.next = this.last;
+  }
+}
+
+LinkedQueueOfStrings.prototype.dequeue = function() {
+  let item = this.first.item;
+  this.first = this.first.next;
+  if (this.isEmpty()) {
+    this.last = new Node();
+    
+  } else {
+    return item;
+  }
+}
+
+const StringClientQueue = function(string) {
+  let queue = new LinkedQueueOfStrings();
+
+  const stringQueue = string.split(' ');
+
+  let output = '';
+
+  stringQueue.forEach(word => {
+    if (word != '-') {
+      queue.enqueue(word);
+    } else {
+      if (output == '') {
+        output += queue.dequeue();
+      } else {
+        output += ' ' + queue.dequeue();
+      }
+    }
+  });
+
+  messenger.queueTest(string, output);
+
+}
+
+StringClientQueue("Mary had a little - lamb - - whose fleece - was white - - as snow");
