@@ -157,13 +157,15 @@ WeightedUnion3.randomConnections(200000);
 
 // Stacks and Queues
 
+const Node = function(item = null) {
+  this.item = item;
+  this.next = null;
+}
+
 const LinkedStackOfStrings = function() {
-  const Node = function(item = null) {
-    this.item = item;
-    this.next = null;
-  }
   
-  let first = new Node();
+  
+  this.first = new Node();
 }
 
 LinkedStackOfStrings.prototype.isEmpty = function() {
@@ -171,10 +173,13 @@ LinkedStackOfStrings.prototype.isEmpty = function() {
 }
 
 LinkedStackOfStrings.prototype.push = function(item) {
-  if (this.first.item) {
-    let firstitem = this.first.item;
-    let oldfirst = new Node(firstitem);
-  }
+
+  let firstitem = this.first.item;
+  let firstnext = this.first.next;
+  let oldfirst = new Node();
+  oldfirst.item = firstitem;
+  oldfirst.next = firstnext;
+
   this.first = new Node();
   this.first.item = item;
   this.first.next = oldfirst;
@@ -197,7 +202,11 @@ const StringClient = function(string) {
     if (word != '-') {
       stack.push(word);
     } else {
-      output += stack.pop();
+      if (output == '') {
+        output += stack.pop();
+      } else {
+        output += ' ' + stack.pop();
+      }
     }
   });
 
@@ -205,5 +214,5 @@ const StringClient = function(string) {
 
 }
 
-StringClient("Mary had a little - lamb -- whose fleece - was white -- as snow");
+StringClient("Mary had a little - lamb - - whose fleece - was white - - as snow");
 

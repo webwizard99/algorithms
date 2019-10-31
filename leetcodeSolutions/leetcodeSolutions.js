@@ -105,3 +105,19 @@ var isPalindrome = function(s) {
   }
   return true;
 };
+
+// 136 single number
+var singleNumber = function(nums) {
+  let hashmap = {};
+  
+  nums.forEach(num => {
+      if (hashmap[num] == undefined) {
+          hashmap[num] = 1;
+      } else {
+          delete hashmap[num];
+      }
+  });
+  
+  return Object.keys(hashmap)[0];
+};
+
