@@ -122,3 +122,86 @@ var singleNumber = function(nums) {
   return Object.keys(hashmap)[0];
 };
 
+// 141 linked list cycle
+
+// didn't know of Set() until looked at solution, but understand
+// logic. code not super performant
+var hasCycle = function(head) {
+  if (!head) return false;
+  let nodeset = new Set();
+  let pointer = head;
+  while (pointer.next) {
+      if (!nodeset.has(pointer)) {
+          nodeset.add(pointer);
+      } else {
+          return true;
+      }
+      
+      
+      pointer = pointer.next;
+  }
+  
+  return false;
+};
+
+// 160 intersection of two linked lists
+
+var getIntersectionNode = function(headA, headB) {
+  // Set()
+  
+  // if headA or headB have no values return null
+  if (!headA || !headB) return null;
+  
+  // create a set
+  let nodeset = new Set();
+  
+  // create a pointer for each head (headA, headB)
+  let pointerA = headA;
+  let pointerB = headB;
+  
+  // create two booleans to determine if we've reached the end of either list
+  let endA = false;
+  let endB = false;
+  
+  // start a while loop based on either linked list having a next property
+  while (!endA || !endB) {
+  
+      // check if current node for pointerA and pointerB are in our set
+      // also check if pointer is null
+      if (!endA && nodeset.has(pointerA)) {
+          return pointerA;
+      } else {
+          nodeset.add(pointerA);
+      }
+  
+      if (!endB && nodeset.has(pointerB)) {
+          return pointerB;
+      } else {
+          nodeset.add(pointerB);
+      }
+  
+      // if either pointer is in the set (and pointer not null), return the pointer
+      
+      // if pointer not in set (and not null), add to set
+          
+      // advance pointers to their next property
+      if (!pointerA.next) {
+          if (!endA) {
+              endA = true;
+          }
+      } else {
+          pointerA = pointerA.next
+      }
+  
+      if (!pointerB.next) {
+          if (!endB) {
+              endB = true;
+          }
+      } else {
+          pointerB = pointerB.next;
+      }
+  }
+  
+  return null;
+  // return false
+};
