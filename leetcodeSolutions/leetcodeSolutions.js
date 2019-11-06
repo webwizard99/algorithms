@@ -205,3 +205,25 @@ var getIntersectionNode = function(headA, headB) {
   return null;
   // return false
 };
+
+// 171. Excel column number
+
+var titleToNumber = function(s) {
+    let total = 0;
+    const offset = 64;
+    for (let i = 0; i < s.length; i++) {
+        total += (s.charCodeAt(i) - offset) * (Math.pow(26, (s.length - 1 - i)));
+    }
+    return total;
+};
+
+// 189. Rotate array
+
+var rotate = function(nums, k) {
+    nums.unshift(... nums.splice((nums.length - k), k));
+    
+    // for (let i = 0; i < k; i++) {
+    //     const num = nums.pop();
+    //     nums.unshift(num);
+    // }
+};

@@ -33,6 +33,12 @@ messenger.queueTest = function(original, output) {
   this.addText(output);
 }
 
+messenger.sortTest = function(fn, time, output) {
+  this.addText(`${fn} test`);
+  this.addText(`time used: ${time}ms`);
+  this.addText(`output: ${output}`);
+}
+
 const QuickUnion = function(N) {
   this.id = [];
   
@@ -290,3 +296,46 @@ const StringClientQueue = function(string) {
 }
 
 StringClientQueue("Mary had a little - lamb - - whose fleece - was white - - as snow");
+
+wordsArr = "nomination humanity slip suburb surprise entry prince moon budge consumer deserve generation notion promotion exchange breast trust trade association bell winner mold spring jacket siege wall explain elaborate vision dribble soil shark dollar virus beard movement hardware outlet miss exile shoot provide interest control roof clearance".split(' ');
+
+const compareStrings = function(stringA, stringB) {
+  if (stringA > stringB) {
+    return -1;
+  } else if (stringB > stringA) {
+    return 1;
+  } else return 0;
+}
+
+const exch = function(arr, i, j) {
+  if (i == j) return;
+  // const swap = arr.slice(i, i + 1);
+  const swap = arr[i];
+  arr[i] = arr[j];
+  arr[j] = swap;
+}
+
+const selectionSortStrings = function() {
+}
+
+selectionSortStrings.prototype.sort = function(strings) {
+  let startTime = new Date().getTime()
+  const N = strings.length;
+  for (let i = 0; i < N; i++) {
+    let min = i;
+    for (let j = i + 1; j < N; j++) {
+      if (compareStrings(strings[j], strings[min]) == 1) {
+        min = j;
+      }
+      
+    }
+    exch(strings, i, min);
+  }
+  let stopTime = new Date().getTime();
+  messenger.sortTest('selection sort', stopTime - startTime, strings.join(' '));
+  return strings;
+}
+
+const stringSwapTest = new selectionSortStrings();
+
+stringSwapTest.sort(wordsArr);
