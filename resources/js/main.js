@@ -297,7 +297,7 @@ const StringClientQueue = function(string) {
 
 StringClientQueue("Mary had a little - lamb - - whose fleece - was white - - as snow");
 
-wordsArr = "nomination humanity slip suburb surprise entry prince moon budge consumer deserve generation notion promotion exchange breast trust trade association bell winner mold spring jacket siege wall explain elaborate vision dribble soil shark dollar virus beard movement hardware outlet miss exile shoot provide interest control roof clearance".split(' ');
+wordsArr = "nomination humanity slip suburb surprise entry prince moon budge consumer deserve generation notion promotion exchange breast trust trade association bell winner mold spring jacket siege wall explain elaborate vision dribble soil shark dollar virus beard movement hardware outlet miss exile shoot provide interest control roof clearance fuel scandal asylum storm overeat headquarters cake economics fat tongue computing page council contrary forum money god beg arena fortune governor castle paradox haircut trunk girlfriend beef flower custody taxi canvas democratic serve illness peanut read freeze reject cord wake beneficiary weed launch flock glasses costume fuss criticism donor relevance feed split dorm nomination float lover continuous necklace society swear".repeat(40).split(' ');
 
 const compareStrings = function(stringA, stringB) {
   if (stringA > stringB) {
