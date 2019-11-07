@@ -33,8 +33,13 @@ messenger.queueTest = function(original, output) {
   this.addText(output);
 }
 
-messenger.sortTest = function(fn, time, output) {
-  this.addText(`${fn} test`);
+messenger.sortTest = function(fn, N, time, output) {
+  this.addText(`${fn} test, ${N} objects`);
+  this.addText(`time used: ${time}ms`);
+}
+
+messenger.sortTestValidation = function(fn, N, time, output) {
+  this.addText(`${fn} test, ${N} objects`);
   this.addText(`time used: ${time}ms`);
   this.addText(`output: ${output}`);
 }
@@ -315,11 +320,11 @@ const exch = function(arr, i, j) {
   arr[j] = swap;
 }
 
-const selectionSortStrings = function() {
+const SelectionSortStrings = function() {
 }
 
-selectionSortStrings.prototype.sort = function(strings) {
-  let startTime = new Date().getTime()
+SelectionSortStrings.prototype.sort = function(strings) {
+  let startTime = new Date().getTime();
   const N = strings.length;
   for (let i = 0; i < N; i++) {
     let min = i;
@@ -332,10 +337,70 @@ selectionSortStrings.prototype.sort = function(strings) {
     exch(strings, i, min);
   }
   let stopTime = new Date().getTime();
-  messenger.sortTest('selection sort', stopTime - startTime, strings.join(' '));
+  messenger.sortTest('selection sort', N, stopTime - startTime, strings.join(' '));
   return strings;
 }
 
-const stringSwapTest = new selectionSortStrings();
+const InsertionSortStrings = function() {
+  
+}
 
-stringSwapTest.sort(wordsArr);
+InsertionSortStrings.prototype.sort = function(strings) {
+  let startTime = new Date().getTime();
+  const N = strings.length;
+  for (let i = 0; i < N; i ++) {
+    for (let j = i; j > 0; j--) {
+      if (compareStrings(strings[j], strings[j - 1])) {
+        exch(strings, j, j - 1);
+      } else break;
+    }
+  }
+
+  let stopTime = new Date().getTime();
+  messenger.sortTest('insertion sort', N, stopTime - startTime, strings.join(' '));
+}
+
+const ShellSortStrings = function() {
+  
+}
+
+ShellSortStrings.prototype.sort = function(strings) {
+  let startTime = new Date().getTime();
+  const N = strings.length;
+  let h = 1;
+  while (h < N/3) {
+    h = 3 * h + 1;
+  }
+
+  while (h >= 1) {
+    console.log(Number.parseInt(h));
+    for (let i = Number.parseInt(h); i < N; i+= Number.parseInt(h)) {
+      for (let j = i;
+          j >= Number.parseInt(h) && compareStrings(strings[j], strings[j - Number.parseInt(h)]);
+          j -= Number.parseInt(h)) {
+        // console.log('shell exch');
+        exch(strings, j, j -Number.parseInt(h));
+      }
+    }
+    h = h / 3;
+  }
+
+  let stopTime = new Date().getTime();
+  messenger.sortTestValidation('shell sort', N, stopTime - startTime, strings.join(' '));
+}
+
+const stringSwapTest = new SelectionSortStrings();
+
+stringSwapTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+stringSwapTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+stringSwapTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+stringSwapTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+
+const stringInsertTest = new InsertionSortStrings();
+stringInsertTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+stringInsertTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+stringInsertTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+stringInsertTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+
+const stringShellTest = new ShellSortStrings();
+stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));

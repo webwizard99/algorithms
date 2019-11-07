@@ -227,3 +227,39 @@ var rotate = function(nums, k) {
     //     nums.unshift(num);
     // }
 };
+
+// 190. Reverse bits
+
+// code not very performant
+var reverseBits = function(n) {
+    
+    // set vars for converting variable to string
+    let currentVal = '';
+    let opNum = n;
+    
+    while (opNum >  0) {
+        let thisDig = opNum % 2;
+        currentVal += thisDig.toString();
+        opNum = Math.floor(opNum / 2);
+    }
+    
+    
+    // if number is less than 32 bits, add extra bits in zeroes
+    // to end of number
+    while (currentVal.length < 32) {
+        currentVal = currentVal + '0';
+    }
+    
+    let outputVal = 0;
+    let power = 1;
+    
+    let strArr = currentVal.split('');
+    
+    while (strArr.length > 0) {
+        let tDig = strArr.pop();
+        outputVal += tDig * power;
+        power *= 2;
+    }
+    
+    return outputVal;
+};
