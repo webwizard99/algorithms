@@ -1,6 +1,82 @@
 // lost solutions preceeding 118 due to clearing temporary
 // internet files
 
+// 2. Add 2 Numbers (76% speed)
+
+var addTwoNumbers = function(l1, l2) {
+    
+    // vars for tracking decimal value and power factorization
+    let outputNum = new ListNode();
+    let outputPointer = outputNum;
+    let remainder = 0;
+    
+    // pointers for linked lists
+    let pointer1 = l1;
+    let pointer2 = l2;
+    
+    // booleans to track list termination
+    let end1 = false;
+    let end2 = false;
+    
+    while ((!end1 || !end2) || remainder != 0) {
+        
+        // declare a variable to store digit
+        let digit = 0;
+        
+        // if pointer1 has value, add to digit
+        if (!end1 && pointer1.val) {
+            digit += pointer1.val;
+        }
+        
+        // if pointer2 has value, add to digit
+        if (!end2 && pointer2.val) {
+            digit += pointer2.val;
+        }
+        
+        // add any remainder to digit
+        if (remainder > 0) {
+            digit += remainder;
+            remainder = 0;
+        }
+        
+        // if digit has two decimal places, store excess digit as remainder
+        if (digit > 9) {
+            remainder = 1;
+            digit = digit % 10;
+        }
+        
+        let oldDigit = outputPointer;
+        
+        // copying enqueue format
+        outputPointer = new ListNode();
+        outputPointer.val = digit;
+        if (outputNum.val == null) {
+            outputNum = outputPointer;
+        } else {
+            oldDigit.next = outputPointer;
+        }
+        
+        
+        if (pointer1.next) {
+            pointer1 = pointer1.next;
+        } else {
+            end1 = true;
+        }
+        
+        if (pointer2.next) {
+            pointer2 = pointer2.next;
+        } else {
+            end2 = true;
+        }
+        
+    }
+    
+    
+    return outputNum;
+    
+    
+};
+
 // 118 Pascal's Triangle
 var generate = function(numRows) {
   let output = [];
