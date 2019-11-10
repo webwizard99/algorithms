@@ -228,7 +228,7 @@ var rotate = function(nums, k) {
     // }
 };
 
-// 190. Reverse bits
+// 190. Reverse bits 10%
 
 // code not very performant
 var reverseBits = function(n) {
@@ -262,4 +262,56 @@ var reverseBits = function(n) {
     }
     
     return outputVal;
+};
+
+// 190. Reverse Bits (try 2) 88%
+
+var reverseBits2 = function(n) {
+    
+    // set vars for converting variable to string
+    let currentVal = '';
+    let opNum = n;
+    
+    while (opNum >  0) {
+        let thisDig = opNum % 2;
+        currentVal += thisDig.toString();
+        opNum = Math.floor(opNum / 2);
+    }
+    
+    let outputVal = 0;
+    let power = Math.pow(2, (32 - currentVal.length));
+    
+    let strArr = currentVal.split('');
+    
+    while (strArr.length > 0) {
+        let tDig = strArr.pop();
+        outputVal += tDig * power;
+        power *= 2;
+    }
+    
+    return outputVal;
+};
+
+// 191. Number of 1 bits
+
+var hammingWeight = function(n) {
+    // if n = 0 return 0
+    if (n == 0) return 0;
+    
+    // define a variable (let) to store number of 1s
+    let ones = 0;
+    
+    // start a while loop conditional on n > 0
+    while (n > 0) {
+    
+        // add to number of 1s the result of n % 2
+        ones += n % 2;
+    
+        // set n = math floor of n /2
+        n = Math.floor(n / 2);
+        
+    }
+    
+    // return our variable
+    return ones;
 };
