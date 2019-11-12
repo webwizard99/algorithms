@@ -172,4 +172,10 @@ messenger.sortTest(...res);
 const stringShellTest = EleSorts.newShellSortStrings();
 
 res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-messenger.sortTestValidation(...res);
+messenger.sortTest(...res);
+res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);

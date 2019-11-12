@@ -32,7 +32,7 @@ const EleSorts = (function(){
       exch(strings, i, min);
     }
     let stopTime = new Date().getTime();
-    return ['selection sort', N, stopTime - startTime];
+    return ['selection sort', N, stopTime - startTime, strings.join(' ')];
   }
 
   const InsertionSortStrings = function() {
@@ -44,14 +44,14 @@ const EleSorts = (function(){
     const N = strings.length;
     for (let i = 0; i < N; i ++) {
       for (let j = i; j > 0; j--) {
-        if (compareStrings(strings[j], strings[j - 1])) {
+        if (compareStrings(strings[j], strings[j - 1]) >= 0) {
           exch(strings, j, j - 1);
         } else break;
       }
     }
   
     let stopTime = new Date().getTime();
-    return ['insertion sort', N, stopTime - startTime];
+    return ['insertion sort', N, stopTime - startTime, strings.join(' ')];
   }
 
   const ShellSortStrings = function() {
@@ -68,9 +68,9 @@ const EleSorts = (function(){
   
     while (h >= 1) {
       console.log(Number.parseInt(h));
-      for (let i = Number.parseInt(h); i < N; i+= Number.parseInt(h)) {
+      for (let i = Number.parseInt(h); i < N; i++) {
         for (let j = i;
-            j >= Number.parseInt(h) && compareStrings(strings[j], strings[j - Number.parseInt(h)]);
+            j >= Number.parseInt(h) && compareStrings(strings[j], strings[j - Number.parseInt(h)]) >= 0;
             j -= Number.parseInt(h)) {
           // console.log('shell exch');
           exch(strings, j, j -Number.parseInt(h));

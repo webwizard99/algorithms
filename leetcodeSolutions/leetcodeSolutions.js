@@ -1,6 +1,25 @@
 // lost solutions preceeding 118 due to clearing temporary
 // internet files
 
+// 1. Twosum
+
+// want to revisit this one because there was still some trial and error in executing it
+var twoSum = function(nums, target) {
+    let hashmap = {};
+    
+    for (let i = 0; i < nums.length; i++) {
+        let complement = target - nums[i];
+        
+        if (hashmap[nums[i]] == undefined) {
+            hashmap[nums[i]] = i;
+        }
+        
+        if (hashmap[complement] != undefined && hashmap[complement] != i) {
+            return [hashmap[complement], i];
+        }
+    }
+};
+
 // 2. Add 2 Numbers (76% speed)
 
 var addTwoNumbers = function(l1, l2) {
@@ -118,7 +137,7 @@ var generate = function(numRows) {
 var maxProfit = function(prices) {
   let totalMin, totalMax, currentMin, currentMax;
   
-  if (prices.length == 0 || prices == []) return 0;
+  if (prices.length == 0) return 0;
   
   
   prices.forEach(price => {
