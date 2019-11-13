@@ -67,7 +67,6 @@ const EleSorts = (function(){
     }
   
     while (h >= 1) {
-      console.log(Number.parseInt(h));
       for (let i = Number.parseInt(h); i < N; i++) {
         for (let j = i;
             j >= Number.parseInt(h) && compareStrings(strings[j], strings[j - Number.parseInt(h)]) >= 0;

@@ -179,3 +179,7 @@ res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
 messenger.sortTest(...res);
 res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
 messenger.sortTest(...res);
+
+let wordsCopy = JSON.parse(JSON.stringify(wordsArr));
+res = mergesort.mergeStringArray(wordsCopy);
+messenger.sortTestValidation(...res);
