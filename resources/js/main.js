@@ -180,6 +180,29 @@ messenger.sortTest(...res);
 res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
 messenger.sortTest(...res);
 
-let wordsCopy = JSON.parse(JSON.stringify(wordsArr));
-res = mergesort.mergeStringArray(wordsCopy);
-messenger.sortTestValidation(...res);
+
+res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+
+res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);
+res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
+messenger.sortTest(...res);

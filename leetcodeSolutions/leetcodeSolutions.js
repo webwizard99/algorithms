@@ -410,3 +410,54 @@ var hammingWeight = function(n) {
     // return our variable
     return ones;
 };
+
+// 202. Happy Number
+
+// Kind of went lazy on this with hashmap and JS libraries
+// so it ended up not performant
+
+var isHappy = function(n) {
+    let hashmap = {};
+    let product = n;
+    
+    
+    while (product != 1) {
+        let nDigits = product.toString().split('').map(nstr => Number.parseInt(nstr));
+        
+        product = nDigits.reduce((sum, dig) => sum + (dig * dig), 0);
+        if (hashmap[product] != undefined) {
+                return false;
+        } else {
+                hashmap[product] = 1;
+        }
+    }
+    
+    return true;
+};
+
+// worked around string conversion, much better performance but memory usage
+// still bad probably from hashmap
+
+var isHappy2 = function(n) {
+    let hashmap = {};
+    let product = n;
+    
+    
+    while (product != 1) {
+        let opProd = product;
+        product = 0;
+        while (opProd > 0) {
+            let dig = (opProd % 10) * (opProd % 10);
+            product += dig;
+            opProd = Math.floor(opProd / 10);
+        }
+        
+        if (hashmap[product] != undefined) {
+                return false;
+        } else {
+                hashmap[product] = 1;
+        }
+    }
+    
+    return true;
+};
