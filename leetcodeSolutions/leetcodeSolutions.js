@@ -461,3 +461,28 @@ var isHappy2 = function(n) {
     
     return true;
 };
+
+// 217. Contains Duplicate
+
+// fast but not good on memory
+var containsDuplicate = function(nums) {
+    if (nums.length == 0) return false;
+    if (nums.length == 1) return false;
+    
+    let found = false;
+    let hashmap = {};
+    
+    nums.forEach(num => {
+        if (hashmap[num] == 1) {
+            found = true;
+        } else {
+            hashmap[num] = 1;
+        }
+    });
+    
+    if (found == true) {
+        return true;
+    } else {
+        return false;
+    }
+};
