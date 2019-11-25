@@ -1,11 +1,7 @@
-.message-box {
+.MessageBox {
   width: 600px;
   height: 600px;
   border: 1px 1px solid rgb(60, 70, 65);
   color: rgb(40, 50, 45);
   overflow: scroll;
-}
-
-message {
-  margin-bottom: .2rem;
 }

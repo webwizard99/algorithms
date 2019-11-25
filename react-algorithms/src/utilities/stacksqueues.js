@@ -74,3 +74,5 @@ const StacksQueues = (function(){
     }
   }
 }());
+
+export default StacksQueues;

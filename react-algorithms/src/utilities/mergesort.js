@@ -115,3 +115,5 @@ const mergesort = (function(){
 
   }
 }());
+
+export default mergesort;

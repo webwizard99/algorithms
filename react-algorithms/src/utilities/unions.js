@@ -114,3 +114,4 @@ const Unions = (function(){
   }
 }());
 
+export default Unions;

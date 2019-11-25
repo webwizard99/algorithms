@@ -96,3 +96,5 @@ const EleSorts = (function(){
     }
   }
 }());
+
+export default EleSorts;
