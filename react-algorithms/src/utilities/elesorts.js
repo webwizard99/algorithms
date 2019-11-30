@@ -1,19 +1,10 @@
+import sortTools from './sortTools';
+
 const EleSorts = (function(){
-  const compareStrings = function(stringA, stringB) {
-    if (stringA > stringB) {
-      return -1;
-    } else if (stringB > stringA) {
-      return 1;
-    } else return 0;
-  }
+  const compareStrings = sortTools.compareStrings;
+  const compareNums = sortTools.compareNumbers;
   
-  const exch = function(arr, i, j) {
-    if (i == j) return;
-    // const swap = arr.slice(i, i + 1);
-    const swap = arr[i];
-    arr[i] = arr[j];
-    arr[j] = swap;
-  }
+  const exch = sortTools.exch;
   
   const SelectionSortStrings = function() {
   }
@@ -32,7 +23,12 @@ const EleSorts = (function(){
       exch(strings, i, min);
     }
     let stopTime = new Date().getTime();
-    return ['selection sort', N, stopTime - startTime, strings.join(' ')];
+    return {
+      fn: 'selection sort', 
+      N: N, 
+      time: stopTime - startTime, 
+      output: strings.join(' ')
+    };
   }
 
   const InsertionSortStrings = function() {
@@ -51,7 +47,36 @@ const EleSorts = (function(){
     }
   
     let stopTime = new Date().getTime();
-    return ['insertion sort', N, stopTime - startTime, strings.join(' ')];
+    return {
+      fn: 'insertion sort', 
+      N: N, 
+      time: stopTime - startTime, 
+      output: strings.join(' ')
+    };
+  }
+
+  const InsertionSortNumbers = function() {
+  
+  }
+  
+  InsertionSortNumbers.prototype.sort = function(nums) {
+    let startTime = new Date().getTime();
+    const N = nums.length;
+    for (let i = 0; i < N; i ++) {
+      for (let j = i; j > 0; j--) {
+        if (compareNums(nums[j], nums[j - 1]) >= 0) {
+          exch(nums, j, j - 1);
+        } else break;
+      }
+    }
+  
+    let stopTime = new Date().getTime();
+    return {
+      fn: 'insertion sort numbers', 
+      N: N, 
+      time: stopTime - startTime, 
+      output: nums.join(' ')
+    };
   }
 
   const ShellSortStrings = function() {
@@ -79,7 +104,12 @@ const EleSorts = (function(){
     }
   
     let stopTime = new Date().getTime();
-    return ['shell sort', N, stopTime - startTime, strings.join(' ')];
+    return {
+      fn: 'shell sort', 
+      N: N, 
+      time: stopTime - startTime, 
+      output: strings.join(' ')
+    };
   }
 
   return {
@@ -89,6 +119,10 @@ const EleSorts = (function(){
 
     newInsertionSortStrings: function() {
       return new InsertionSortStrings();
+    },
+
+    newInsertionSortNumbers: function() {
+      return new InsertionSortNumbers();
     },
 
     newShellSortStrings: function() {

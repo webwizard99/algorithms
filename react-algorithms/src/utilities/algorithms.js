@@ -2,6 +2,8 @@ import Unions from './unions';
 import StacksQueues from './stacksqueues';
 import EleSorts from './elesorts';
 import mergesort from './mergesort';
+import quicksort from './quicksort';
+import shuffle from './shuffle';
 
 
 const algorithms = (function(){
@@ -9,7 +11,17 @@ const algorithms = (function(){
   const arrMult = 80;
   const wordsArr = "nomination humanity slip suburb surprise entry prince moon budge consumer deserve generation notion promotion exchange breast trust trade association bell winner mold spring jacket siege wall explain elaborate vision dribble soil shark dollar virus beard movement hardware outlet miss exile shoot provide interest control roof clearance fuel scandal asylum storm overeat headquarters cake economics fat tongue computing page council contrary forum money god beg arena fortune governor castle paradox haircut trunk girlfriend beef flower custody taxi canvas democratic serve illness peanut read freeze reject cord wake beneficiary weed launch flock glasses costume fuss criticism donor relevance feed split dorm nomination float lover continuous necklace society swear".repeat(arrMult).split(' ');
 
-  
+  let testNumbers = [];
+  const testN = 80000;
+
+  const initTestNumbers = function() {
+    for (let i = 0; i < testN; i++) {
+      const testNumber = Math.random();
+      testNumbers.push(testNumber);
+    }
+  }
+
+
   const messenger = {
     maxMessages: 50,
     messages: []
@@ -43,12 +55,19 @@ const algorithms = (function(){
     this.addText(output);
   }
   
-  messenger.sortTest = function(fn, N, time) {
+  messenger.sortTest = function(payload) {
+    const fn = payload.fn;
+    const N = payload.N;
+    const time = payload.time;
     this.addText(`${fn} test, ${N} objects`);
     this.addText(`time used: ${time}ms`);
   }
-  
-  messenger.sortTestValidation = function(fn, N, time, output) {
+
+  messenger.sortTestValidation = function(payload) {
+    const fn = payload.fn;
+    const N = payload.N;
+    const time = payload.time;
+    const output = payload.output;
     this.addText(`${fn} test, ${N} objects`);
     this.addText(`time used: ${time}ms`);
     this.addText(`output: ${output}`);
@@ -159,59 +178,80 @@ const algorithms = (function(){
     const stringSwapTest = EleSorts.newSelectionSortStrings();
 
     let res = stringSwapTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
 
     const stringInsertTest = EleSorts.newInsertionSortStrings();
 
     res = stringInsertTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
+
+    // const numInsertTest = EleSorts.newInsertionSortNumbers();
+    // res = numInsertTest.sort(testNumbers);
+    // messenger.sortTest(res);
 
     const stringShellTest = EleSorts.newShellSortStrings();
 
     res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = stringShellTest.sort(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
   }
 
   const mergeSortTest = function() {
     let res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArray(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
 
     res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
     res = mergesort.mergeStringArrayModded(JSON.parse(JSON.stringify((wordsArr))));
-    messenger.sortTest(...res);
+    messenger.sortTest(res);
+
+    res = mergesort.mergeStringArrayBU(JSON.parse(JSON.stringify((wordsArr))));
+    messenger.sortTest(res);
+  }
+
+  const quickSortTest = function() {
+    let res = quicksort.quickSortNumArr(testNumbers);
+    messenger.sortTestValidation(res);
+  }
+
+  const testKnuth = function() {
+    console.log(...testNumbers.slice(3, 8));
+    shuffle.knuth(testNumbers);
+    console.log(...testNumbers.slice(3, 8));
   }
   
   return {
     init: function() {
+      initTestNumbers();
       unionTests();
       stacksQueuesTest();
       elementarySortsTest();
       mergeSortTest();
+      // testKnuth();
+      quickSortTest();
     },
 
     getMessages: function() {
