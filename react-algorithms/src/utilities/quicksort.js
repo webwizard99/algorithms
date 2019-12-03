@@ -11,33 +11,32 @@ const quicksort = (function(){
   Quick.prototype.partition = function(arr, lo, hi) {
     // I didn't want to increment i in the first compare, so I initialized i as lo + 1
     // and added a line to increment i below
-    let i = lo, j = hi + 1;
+    let i = lo + 1, j = hi;
 
     while (true) {
-      while (compare(arr[++i], arr[lo]) > 0) {      // find item on left to swap
-        
+      while (compare(arr[i], arr[lo]) > 0) {      // find item on left to swap
+        i++;
         if (i == hi) break;
       }
 
-      while (compare(arr[lo], arr[--j]) > 0) {      // find item on right to swap
-        
+      while (compare(arr[lo], arr[j]) > 0) {      // find item on right to swap
+        j--;
         if (j == lo) break;
       }
 
       if (i >= j) break;                      // check if pointers cross
+
       exch(arr, i, j);                          // swap partition item into place
     }
 
-    exch(arr, lo, i);
+    exch(arr, lo, j);
 
     return j;
   }
 
   Quick.prototype.sort = function(arr, lo, hi) {
-    console.log(hi, lo);
     if (hi <= lo) return;
     let j = this.partition(arr, lo, hi);
-    console.log(j);
     this.sort(arr, lo, j -1);
     this.sort(arr, j + 1, hi);
   }
