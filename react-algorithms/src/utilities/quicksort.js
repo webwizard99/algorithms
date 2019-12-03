@@ -34,6 +34,7 @@ const quicksort = (function(){
   }
 
   Quick.prototype.sort = function(arr, lo, hi) {
+    console.log(hi, lo);
     if (hi <= lo) return;
     let j = this.partition(arr, lo, hi);
     console.log(j);
@@ -44,6 +45,26 @@ const quicksort = (function(){
   Quick.prototype.Sort = function(arr) {
     shuffle.knuth(arr);
     this.sort(arr, 0, arr.length -1);
+  }
+
+  const Quick2 = function() {};
+
+  Quick2.prototype.sort = function(arr) {
+    if (arr.length < 2) return arr;
+
+    const pivot = arr[arr.length -1];
+
+    const left = [], right = [];
+
+    for (let i = 0; i < arr.length -1; i++) {
+      if (arr[i] < pivot) {
+        left.push(arr[i]);
+      } else {
+        right.push(arr[i]);
+      }
+
+      return [...this.sort(left), pivot, ...this.sort(right)];
+    }
   }
 
   return {
@@ -64,6 +85,27 @@ const quicksort = (function(){
         time: stopTime - startTime,
         output: numArr.join('\n')
       }
+    },
+
+    quickSortNumArr2: function(numArr) {
+      const N = numArr.length;
+
+      let startTime = new Date().getTime();
+
+      const quickSort2 = new Quick2();
+
+      quickSort2.sort(numArr);
+
+      let stopTime = new Date().getTime();
+
+      return {
+        fn: 'quicksort numbers v2',
+        N: N,
+        time: stopTime - startTime,
+        output: numArr.join('\n')
+      }
+
+
     }
   }
 }());

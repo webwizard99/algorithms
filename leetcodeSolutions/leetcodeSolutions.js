@@ -486,3 +486,184 @@ var containsDuplicate = function(nums) {
         return false;
     }
 };
+
+
+// 8. String To Integer (atoi)
+
+// I attempted this but after wrangling with the solution,
+// I can't get it to work because the NaN result from 
+// Number.parseInt won't test to a NaN literal or even to 
+// itself. I'm stumped as to why. I could make an array of
+// characters from 0 to 9 and test against it, but
+// I didn't want to do that.
+
+var myAtoi = function(str) {
+    let resInt = 0;
+    let numberFound = false;
+    let offset = 0;
+    let valence = '';
+    const wrong = Number.parseInt('n');
+    console.log(wrong);
+    
+    while (true) {
+        const ss = str.charAt(offset);
+        if (!numberFound) {
+            
+            
+            if (ss == '+' || ss == '-') {
+                valence = ss;
+                
+            } else if (Number.parseInt(ss) != NaN && ss != ' ') {
+                resInt = Number.parseInt(ss);
+                numberFound = true;
+                if (valence == '-') resInt *= -1;
+            } else if (ss != ' ' && ss != '+' && ss != '-') {
+                return 0;
+            } 
+            
+             
+        // if numberfound...
+        } else {
+            if (Number.parseInt(ss) !== NaN && ss != ' ' & ss != '-' && ss != '+') {
+                console.log(Number.parseInt(ss) == wrong);
+                resInt *= 10;
+                if (resInt > 0) {
+                    resInt += Number.parseInt(ss);    
+                } else {
+                    resInt -= Number.parseInt(ss);
+                }
+                
+            }
+        }
+        
+        if (resInt > (Math.pow(2, 31) - 1)) {
+            return (Math.pow(2, 31) -1);
+        } else if (resInt < -(Math.pow(2, 31))) {
+            return -(Math.pow(2, 31));
+        }
+        
+        offset++;
+        if (offset == str.length) break;
+    }
+    
+    return resInt;
+    
+};
+
+// 8. String to Ingteger (try 2)
+// tried using object keys to test for numerals. decent speed, but
+// not good on memory
+
+var myAtoi2 = function(str) {
+    let resInt = 0;
+    let numberFound = false;
+    let offset = 0;
+    let valence = 1;
+    let numbers = {};
+    
+    for (let i = 0; i < 10; i++) {
+        numbers[i.toString()] = i;
+    }
+    
+    let signs = {};
+    
+    signs['-'] = -1;
+    signs['+'] = 1;
+    
+    
+    while (true) {
+        const ss = str.charAt(offset);
+        if (!numberFound) {
+            
+            
+            if (signs[ss]) {
+                valence = signs[ss];
+                numberFound = true;
+            } else if (numbers[ss] != undefined) {
+                resInt = numbers[ss];
+                numberFound = true;
+                resInt *= valence;
+            } else if (ss != ' ' && ss != '+' && ss != '-') {
+                return 0;
+            } 
+            
+             
+        // if numberfound...
+        } else {
+            if (numbers[ss] != undefined) {
+                
+                resInt *= 10;
+                resInt += (numbers[ss] * valence);
+            } else break;
+        }
+        
+        if (resInt > (Math.pow(2, 31) - 1)) {
+            return (Math.pow(2, 31) -1);
+        } else if (resInt < -(Math.pow(2, 31))) {
+            return -(Math.pow(2, 31));
+        }
+        
+        offset++;
+        if (offset == str.length) break;
+    }
+    
+    return resInt;
+    
+};
+
+
+// 204. Count Primes
+
+var countPrimes = function(n) {
+    let primes = new Array(n);
+    
+    for (let i = 2; i * i < n; i++) {
+        if (!primes[i]) {
+            for (let j = 2; j * i < n; j++) {
+                primes[i * j] = true;
+            }
+        }
+    }
+    
+    let returnVal = 0;
+    
+    for (let i = 2; i < n; i++) {
+        if (!primes[i]) {
+            returnVal++;
+        }
+    }
+    
+    return returnVal;
+};
+
+// 206. Reverse Linked List
+
+// good on time, not on memory
+
+var reverseList = function(head) {
+    let started = false;
+    let current = head;
+    
+    if (head == null) return null;
+    if (head.next == null) return head;
+    
+    let output = new ListNode();
+    
+    while (current != null) {
+        if (!started) {
+            let last = current;
+            output.val = current.val;
+            current = current.next;
+            output.next = null;
+            started = true;
+        } else {
+            let next = new ListNode();
+            next.val = current.val;
+            next.next = output;
+            output = next;
+            current = current.next
+        }
+    }
+    
+    return output;
+};
