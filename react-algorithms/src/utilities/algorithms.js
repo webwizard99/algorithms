@@ -239,6 +239,22 @@ const algorithms = (function(){
     messenger.sortTest(res);
     res = quicksort.quickSortNumArr(testNumbers);
     messenger.sortTest(res);
+    res = quicksort.quickSortNumArr(testNumbers);
+    messenger.sortTest(res);
+    res = quicksort.quickSortNumArr(testNumbers);
+    messenger.sortTest(res);
+
+    res = quicksort.quickSort3WayNumbers(testNumbers);
+    messenger.sortTest(res);
+    
+    res = quicksort.quickSort3WayStrings(JSON.parse(JSON.stringify((wordsArr))));
+    messenger.sortTest(res);
+    res = quicksort.quickSort3WayStrings(JSON.parse(JSON.stringify((wordsArr))));
+    messenger.sortTest(res);
+    res = quicksort.quickSort3WayStrings(JSON.parse(JSON.stringify((wordsArr))));
+    messenger.sortTest(res);
+    res = quicksort.quickSort3WayStrings(JSON.parse(JSON.stringify((wordsArr))));
+    messenger.sortTest(res);
   }
 
   const testKnuth = function() {

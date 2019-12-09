@@ -4,6 +4,7 @@ import shuffle from './shuffle';
 const quicksort = (function(){
 
   const compare = sortTools.compareNumbers;
+  const compareStr = sortTools.compareStrings;
   const exch = sortTools.exch;
 
   const Quick = function() {};
@@ -66,6 +67,64 @@ const quicksort = (function(){
     }
   }
 
+    const Quick3WayNums = function() {};
+
+    Quick3WayNums.prototype.sort = function(arr, lo, hi) {
+      if (hi <= lo) return;
+      let lt = lo, gt = hi;
+      let v = arr[lo];
+
+      let i = lo;
+      while (i <= gt) {
+        let comp = compare(arr[i], v);
+        if (comp > 0) {
+          exch(arr, lt, i);
+          lt++;
+          i++;
+        } else if (comp < 0) {
+          exch(arr, i, gt);
+          gt--;
+        } else {
+          i++;
+        }
+      }
+
+      this.sort(arr, lo, lt - 1);
+      this.sort(arr, gt + 1, hi);
+    }
+
+    const Quick3WayStrings = function() {};
+
+    Quick3WayStrings.prototype.sort = function(arr, lo, hi) {
+      if (hi <= lo) return;
+      // console.log(`quick 3 way strings... hi: ${hi}, lo: ${lo}`);
+
+      let lt = lo, gt = hi;
+      let v = arr[lo];
+
+      let i = lo;
+      while (i<= gt) {
+        let comp = compareStr(arr[i], v);
+        // console.log(`comp: ${comp}, i: ${i}, lt: ${lt}, gt: ${gt}`);
+        if (comp > 0) {
+          exch(arr, lt, i);
+          lt++;
+          i++;
+        } else if (comp < 0) {
+          exch(arr, i, gt);
+          
+          gt--;
+        } else {
+          i++;
+        }
+      }
+    
+      this.sort(arr, lo, lt -1);
+      this.sort(arr, gt + 1, hi);
+    
+    }
+  
+
   return {
     quickSortNumArr: function(numArr) {
       const N = numArr.length;
@@ -105,6 +164,54 @@ const quicksort = (function(){
       }
 
 
+    },
+
+    quickSort3WayNumbers: function(numArr) {
+      const N = numArr.length;
+
+      shuffle.knuth(numArr);
+      
+
+      let startTime = new Date().getTime();
+
+      const quick3WayN = new Quick3WayNums();
+
+      quick3WayN.sort(numArr, 0, numArr.length -1);
+
+      let stopTime = new Date().getTime();
+
+      return {
+        fn: 'quicksort 3 way numbers',
+        N: N,
+        time: stopTime - startTime,
+        output: numArr.join('\n')
+      }
+
+    },
+
+    quickSort3WayStrings: function(strArr) {
+      const N = strArr.length;
+
+      // if (shuf) {
+      //   shuffle.knuth(strArr);
+      // }
+
+      let startTime = new Date().getTime();
+
+      const quick3WayS = new Quick3WayStrings();
+
+      // debugger;
+
+      quick3WayS.sort(strArr, 0, strArr.length -1);
+
+      let stopTime = new Date().getTime();
+
+      return {
+        fn: 'quicksort 3 way strings',
+        N: N,
+        time: stopTime - startTime,
+        output: strArr.join('\n')
+      }
     }
   }
 }());
