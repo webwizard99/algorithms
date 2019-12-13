@@ -3,6 +3,7 @@ import StacksQueues from './stacksqueues';
 import EleSorts from './elesorts';
 import mergesort from './mergesort';
 import quicksort from './quicksort';
+import heaps from './heaps';
 import shuffle from './shuffle';
 
 
@@ -257,6 +258,10 @@ const algorithms = (function(){
     messenger.sortTest(res);
   }
 
+  const heapsTest = function() {
+    heaps.loadMaxHeapPQ(testNumbers);
+  }
+
   const testKnuth = function() {
     console.log(...testNumbers.slice(3, 8));
     shuffle.knuth(testNumbers);
@@ -272,6 +277,7 @@ const algorithms = (function(){
       mergeSortTest();
       // testKnuth();
       quickSortTest();
+      heapsTest();
     },
 
     getMessages: function() {
