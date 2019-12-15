@@ -667,3 +667,55 @@ var reverseList = function(head) {
     
     return output;
 };
+
+// 412. Fizzbuzz
+
+var fizzBuzz = function(n) {
+    
+    // if n == 0, return null
+    if (n === 0) {
+        return null;
+    }
+    
+    
+    // declare an array into which to put our numbers and strings
+    let outputArr = [];
+    
+    // start a for loop (on 1) that stops on <= n / i++
+    for (let i = 1; i <= n; i++) {
+    
+        // declare a string var to be added to array
+        let tStr = '';
+    
+        // test if divisible by 3
+        if (i % 3 === 0) {
+    
+            // string += "Fizz"
+            tStr += "Fizz";
+            
+        }
+    
+        // test if divisible by 5
+        if (i % 5 === 0) {
+            
+            // string += "Buzz"
+            tStr += "Buzz";
+            
+        }
+    
+        // test if not divisible by 3 or 5
+        if (i % 3 !== 0 && i % 5 !== 0) {
+    
+            // string = i.toString();
+            tStr += i.toString();
+            
+        }
+    
+        // push string to array
+        outputArr.push(tStr);
+        
+    }
+    
+    // return array
+    return outputArr;
+}
