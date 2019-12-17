@@ -11,7 +11,7 @@ const heaps = (function(){
   
 
   MaxHeapPQ.prototype.swim = function(k) {
-    while (k > 1 && this.less(Math.floor(k/2), k)) {
+    while (k > 1 && this.less(Math.floor(k/2), k) > 0) {
       this.exch(k, Math.floor(k/2));
       k = Math.floor(k/2);
     }
@@ -29,7 +29,7 @@ const heaps = (function(){
       let j = 2 * k;
       // if j is not last item on pq and j is less than sibling,
       // increment j to point to larger sibling
-      if (j < this.N && this.less(j, j+1)) {
+      if (j < this.N && this.less(j, j+1) > 0) {
         j++;
       }
       // if sinking item is not less than larger child, stop
@@ -39,18 +39,19 @@ const heaps = (function(){
       }
 
       this.exch(k, j);
+      k = j;
     }
   }
 
   MaxHeapPQ.prototype.delMax = function() {
-    // we have to point to 0 because arr is actually
-    // zero indexed
+    
     const max = this.pq[1];
 
     this.exch(1, this.N);    
     this.N--;
     this.sink(1);
     this.pq[this.N + 1] = null;
+    
     return max;
   }
 
@@ -96,8 +97,9 @@ const heaps = (function(){
     let k = i - 1;
     let l = j - 1;
     let t = arr[k];
-    arr[l] = arr[k];
-    arr[k] = t;
+    arr[k] = arr[l];
+    arr[l] = t;
+    
   }
 
   Heap.prototype.sink = function(arr, k, N) {
@@ -106,27 +108,31 @@ const heaps = (function(){
 
       // if item has sibing and sibling is higher, increment
       // j
-      if (j < N && this.less(arr, j, j + 1)) {
+      if (j < N && this.less(arr, j, j + 1) > 0) {
         j++;
       }
 
-      if (!this.less(arr, k, j)) {
+      if (!this.less(arr, k, j) > 0) {
         break;
       } 
 
       this.exch(arr, k, j);
+      k = j;
     }
   }
 
   Heap.prototype.sort = function(arr) {
+    
     let N = arr.length;
     for (let k = Math.floor(N /2); k >= 1; k--) {
       this.sink(arr, k, N);
     }
+
     while (N > 1) {
       this.exch(arr, 1, N);
       N--;
       this.sink(arr, 1, N);
+      
     }
   }
   
@@ -135,13 +141,31 @@ const heaps = (function(){
     loadMaxHeapPQ: function(arr) {
       let maxHeap = new MaxHeapPQ();
 
+
       for (let i = 0; i < arr.length; i++) {
         maxHeap.insert(arr[i]);
       }
 
-      console.log(maxHeap.pq);
+    },
 
-      // console.log(maxHeap.delMax());
+    heapSort: function(arr) {
+      const N = arr.length;
+
+      let startTime = new Date().getTime();
+
+      let heap = new Heap();
+
+      heap.sort(arr);
+
+
+      let stopTime = new Date().getTime();
+
+      return {
+        fn: 'heapsort',
+        N: N,
+        time: stopTime - startTime,
+        output: arr.join('\n')
+      }
     }
   }
 }());
